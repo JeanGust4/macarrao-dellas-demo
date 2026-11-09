@@ -1,0 +1,10 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { customerAssistant } from '../lib/customer-assistant';
+import { initialCatalog } from '../lib/catalog';
+const catalog={...initialCatalog,override:'open' as const};
+test('Rafaele orienta primeira compra sem registrar pedidos',()=>{const reply=customerAssistant('Não sei usar o site',catalog);assert.match(reply.answer,/Rafaele/);assert.ok(reply.actions.some(a=>a.type==='category'));assert.ok(reply.actions.every(a=>['category','product','cart','tour'].includes(a.type)))});
+test('sugestões refletem preço e disponibilidade atuais',()=>{const c={...catalog,products:catalog.products.map(p=>({...p,active:p.id==='p2',price:2190}))};const reply=customerAssistant('Quero frango 500 ml',c);assert.equal(reply.actions.length,1);assert.equal(reply.actions[0].value,'p2');assert.match(reply.actions[0].label,/21,90/)});
+test('carrinho vazio não é apresentado como pronto para finalizar',()=>{assert.ok(customerAssistant('Finalizar meu pedido',catalog,0).actions.every(a=>a.type!=='cart'));assert.equal(customerAssistant('Finalizar meu pedido',catalog,2).actions[0].type,'cart')});
+test('consulta pública não expõe pedidos nem garante segurança alimentar',()=>{const tracking=customerAssistant('Onde está meu pedido?',catalog);assert.match(tracking.answer,/privacidade/);assert.equal(tracking.actions.some(a=>a.type==='product'),false);assert.match(customerAssistant('Tenho alergia a leite',catalog).answer,/não consigo garantir/)});
+test('taxas de entrega vêm do catálogo, sem valores inventados',()=>{assert.match(customerAssistant('Qual a taxa de entrega?',{...catalog,rates:{'Bairro teste':750}}).answer,/Bairro teste: R\$\s*7,50/)});

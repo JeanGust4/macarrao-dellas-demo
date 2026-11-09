@@ -1,0 +1,1 @@
+export async function api<T=any>(path:string,options:RequestInit={}):Promise<T>{const response=await fetch('/api/'+path,{...options,headers:{'Content-Type':'application/json',...options.headers},cache:'no-store'});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Não foi possível concluir a solicitação.');return data;}
