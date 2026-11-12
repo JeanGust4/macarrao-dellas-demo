@@ -4,9 +4,23 @@ A demo local funciona sem conta externa. O padrão criado pelo setup é `DEMO_MO
 
 ## IA externa
 
-O painel possui um adaptador opcional para a Responses API. Somente se desejar testá-lo, configure `OPENAI_API_KEY` e `OPENAI_MODEL` em `.env.local` e reinicie o servidor. A chave fica no servidor. O modo padrão usa regras locais. A Rafaele do cliente permanece uma assistente guiada pelo catálogo.
+### Assistente Rafaele — Google Gemini
 
-Chamadas externas dependem de conta, modelo disponível e créditos e podem gerar custos. Esse adaptador não executa mudanças em pedidos.
+A Rafaele do cliente utiliza regras locais combinadas com a API do Google Gemini para responder perguntas abertas e oferecer recomendações contextualizadas pelo cardápio.
+
+Para executar a integração localmente, configure `GEMINI_API_KEY` em `.env.local` e reinicie o servidor.
+
+A chave fica no servidor e não deve ser exposta no navegador ou compartilhada no repositório. Cada desenvolvedor deve configurar sua própria chave.
+
+Quando uma pergunta é encaminhada ao Gemini, o histórico da conversa e o contexto do cardápio são enviados à API para gerar a resposta. Não são enviados dados privados do checkout ou informações privadas dos pedidos ao modelo.
+
+As chamadas externas dependem de conta, modelo disponível, limites de uso e créditos, podendo gerar custos.
+
+### Adaptador do painel — OpenAI
+
+O painel possui um adaptador opcional para a Responses API. Somente se desejar testá-lo, configure `OPENAI_API_KEY` e `OPENAI_MODEL` em `.env.local` e reinicie o servidor. A chave fica no servidor.
+
+O modo padrão usa regras locais para esse adaptador. Ele não executa mudanças em pedidos.
 
 ## WhatsApp oficial
 
