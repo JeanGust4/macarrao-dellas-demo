@@ -38,7 +38,7 @@ As rotas são reunidas em `app/api/[...path]/route.ts`. O conteúdo de erros ine
 
 A Rafaele, assistente do cliente, combina regras locais com a API do Google Gemini. As regras locais identificam intenções e tratam ações de navegação e funcionalidades relacionadas ao cardápio. Perguntas abertas e solicitações de recomendações podem ser encaminhadas ao Gemini.
 
-Quando uma consulta é encaminhada à IA, o servidor envia o histórico da conversa e o contexto do cardápio para gerar respostas contextualizadas. A integração utiliza a variável `GEMINI_API_KEY`, configurada no servidor. A Rafaele não acessa pedidos privados, não grava pedidos e não recebe os campos de endereço ou telefone do checkout.
+Quando uma consulta é encaminhada à IA, o servidor envia o histórico da conversa e o contexto do cardápio para gerar respostas contextualizadas. A integração utiliza a variável GEMINI_API_KEY, configurada no servidor. A Rafaele não acessa pedidos privados, não grava pedidos e não recebe os campos de endereço ou telefone do checkout.
 
 A assistente do gestor opera atrás do login e consulta a operação. Sem credenciais externas, responde por regras. O adaptador opcional de IA utiliza a Responses API da OpenAI e recebe um resumo limitado produzido pelo servidor, sem dispor de ferramentas de alteração.
 
